@@ -28,3 +28,12 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules (Debby Narciso Cosmetics store)
+
+- Public catalogue reads go through `src/lib/catalog.functions.ts` server functions with a per-request publishable client (`public-db.server.ts`); route loaders return that data directly (no query-cache hydration is configured). Why: SSR + SEO without leaking privileged keys.
+- Admin CRUD uses the browser Supabase client and relies on RLS (`has_role(auth.uid(),'admin')`); `/admin` lives under `src/routes/_authenticated/` and also checks the role in `admin.tsx`. Why: database is the real security boundary.
+- Visitor (anon) RLS policies must not call `has_role`; keep separate `TO anon` and `TO authenticated` SELECT policies. Why: anon cannot execute `has_role`.
+- Roles live only in `user_roles`; admins are promoted with `public.grant_admin_by_email(email)` (service role only); public signup is disabled. Why: no self-registration of admins.
+- The `product-images` bucket is private (workspace blocks public buckets); images are stored by `storage_path` and served via the cached `/img/$` server route. Why: stable, cacheable public image URLs.
+- Pricing/stock/WhatsApp rules live in `src/lib/pricing.ts` and `src/lib/whatsapp.ts`, covered by `src/test/store-rules.test.ts`. Why: single source of truth for money and order message.

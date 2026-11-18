@@ -119,9 +119,9 @@ function ProductPage() {
                   onClick={() => setActive(i)}
                   aria-label={`Ver fotografia ${i + 1}`}
                   aria-current={i === active}
-                  className={cn("size-20 shrink-0 overflow-hidden rounded-xl border-2", i === active ? "border-primary" : "border-transparent opacity-70")}
+                  className={cn("size-20 shrink-0 overflow-hidden rounded-xl border-2 bg-blush", i === active ? "border-primary" : "border-transparent opacity-70")}
                 >
-                  <img src={img.url} alt="" loading="lazy" className="h-full w-full object-cover" />
+                  <img src={img.url} alt="" className="h-full w-full object-cover" />
                 </button>
               ))}
             </div>
