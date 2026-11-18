@@ -1,0 +1,2 @@
+ALTER TABLE public.product_images ALTER COLUMN image_url DROP NOT NULL;
+ALTER TABLE public.product_images ADD CONSTRAINT product_images_has_source CHECK (image_url IS NOT NULL OR storage_path IS NOT NULL);
