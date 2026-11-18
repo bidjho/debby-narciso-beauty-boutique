@@ -1,14 +1,20 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { ExternalLink, FolderTree, LayoutDashboard, LogOut, Package, ShieldAlert, UserCog } from "lucide-react";
+import { ExternalLink, FolderTree, LayoutDashboard, LogOut, Package, ShieldAlert, UserCog, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-debby-narciso.webp.asset.json";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   beforeLoad: async ({ context }) => {
-    const { data, error } = await supabase.rpc("has_role", { _user_id: context.user.id, _role: "admin" });
-    return { isAdmin: !error && data === true };
+    const [adminRes, ownerRes] = await Promise.all([
+      supabase.rpc("has_role", { _user_id: context.user.id, _role: "admin" }),
+      supabase.rpc("has_role", { _user_id: context.user.id, _role: "owner" }),
+    ]);
+    return {
+      isAdmin: !adminRes.error && adminRes.data === true,
+      isOwner: !ownerRes.error && ownerRes.data === true,
+    };
   },
   head: () => ({
     meta: [
@@ -26,6 +32,7 @@ const NAV = [
   { to: "/admin", label: "Resumo", icon: LayoutDashboard, exact: true },
   { to: "/admin/produtos", label: "Produtos", icon: Package, exact: false },
   { to: "/admin/categorias", label: "Categorias", icon: FolderTree, exact: false },
+  { to: "/admin/equipa", label: "Equipa", icon: Users, exact: false, ownerOnly: true },
   { to: "/admin/conta", label: "Conta", icon: UserCog, exact: false },
 ] as const;
 
@@ -41,7 +48,8 @@ function useSignOut() {
 }
 
 function AdminLayout() {
-  const { isAdmin, user } = Route.useRouteContext();
+  const { isAdmin, isOwner, user } = Route.useRouteContext();
+  const nav = NAV.filter((n) => !("ownerOnly" in n) || isOwner);
   const signOut = useSignOut();
 
   if (!isAdmin) {
@@ -66,7 +74,7 @@ function AdminLayout() {
         <img src={logo.url} alt="Debby Narciso Cosmetics" className="h-14 w-auto self-start rounded-lg" />
         <p className="eyebrow mt-3 text-gold">Painel</p>
         <nav className="mt-8 flex flex-col gap-1" aria-label="Administração">
-          {NAV.map((n) => (
+          {nav.map((n) => (
             <Link key={n.to} to={n.to} activeOptions={{ exact: n.exact }} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm hover:bg-sidebar-accent" activeProps={{ className: "bg-sidebar-accent text-sidebar-primary" }}>
               <n.icon className="size-4" aria-hidden /> {n.label}
             </Link>
@@ -91,8 +99,8 @@ function AdminLayout() {
         <Outlet />
       </main>
 
-      <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-4 border-t border-border bg-card md:hidden" aria-label="Administração">
-        {NAV.map((n) => (
+      <nav className="fixed inset-x-0 bottom-0 z-30 grid border-t border-border bg-card md:hidden" style={{ gridTemplateColumns: `repeat(${nav.length}, minmax(0, 1fr))` }} aria-label="Administração">
+        {nav.map((n) => (
           <Link key={n.to} to={n.to} activeOptions={{ exact: n.exact }} className="flex flex-col items-center gap-1 py-2.5 text-xs text-muted-foreground" activeProps={{ className: "text-primary" }}>
             <n.icon className="size-5" aria-hidden /> {n.label}
           </Link>
