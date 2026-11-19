@@ -6,5 +6,6 @@
 - [x] Admin: login, dashboard, produtos (CRUD + fotos + promoções), categorias
 - [x] SEO: metadados, sitemap.xml, robots.txt, dados estruturados
 - [x] Testes de regras (preços, stock, WhatsApp) e testes no browser (visitante + admin)
-- [ ] Primeiro administrador — aguarda email da proprietária (criar conta em Utilizadores → Adicionar utilizador e pedir a promoção)
+- [x] Primeiro administrador (bidjhodaaida@gmail.com, dono da loja)
+- [x] Painel Equipa: convidar, mudar acesso, bloquear/reativar, nova palavra-passe
 - [ ] Logótipo em ficheiro original (PNG/SVG) — atualmente recortado da fotografia da loja
