@@ -1,9 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { ArrowRight, Clock, MapPin, MessageCircle, Phone, Store, Truck } from "lucide-react";
 import { getHomeData } from "@/lib/catalog.functions";
 import { STORE } from "@/lib/store-config";
 import { whatsappChatUrl } from "@/lib/whatsapp";
 import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/shop/EmptyState";
 import { ProductGrid } from "@/components/shop/ProductCard";
 import { SectionHeading } from "@/components/shop/SectionHeading";
 import { InstagramIcon, WhatsAppIcon } from "@/components/shop/icons";
@@ -25,8 +26,18 @@ export const Route = createFileRoute("/")({
     ],
   }),
   loader: () => getHomeData(),
+  errorComponent: HomeError,
   component: HomePage,
 });
+
+function HomeError() {
+  const router = useRouter();
+  return (
+    <div className="container-shop py-12">
+      <EmptyState title="Não foi possível carregar a página" description="Verifique a sua ligação e tente novamente." action={<Button onClick={() => router.invalidate()}>Tentar novamente</Button>} />
+    </div>
+  );
+}
 
 function HomePage() {
   const data = Route.useLoaderData();

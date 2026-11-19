@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate, useRouter } from "@tanstack/react-router";
 import { ChevronLeft, ImageOff, ShoppingBag, Truck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -8,6 +8,7 @@ import { useCart } from "@/lib/cart";
 import { STORE } from "@/lib/store-config";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/shop/EmptyState";
 import { PriceTag } from "@/components/shop/PriceTag";
 import { ProductGrid } from "@/components/shop/ProductCard";
 import { QuantityStepper } from "@/components/shop/QuantityStepper";
@@ -55,6 +56,7 @@ export const Route = createFileRoute("/produto/$slug")({
     };
   },
   component: ProductPage,
+  errorComponent: ProductError,
   notFoundComponent: () => (
     <div className="container-shop py-20 text-center">
       <h1 className="text-4xl font-semibold">Produto não encontrado</h1>
@@ -63,6 +65,15 @@ export const Route = createFileRoute("/produto/$slug")({
     </div>
   ),
 });
+
+function ProductError() {
+  const router = useRouter();
+  return (
+    <div className="container-shop py-12">
+      <EmptyState title="Não foi possível carregar o produto" description="Verifique a sua ligação e tente novamente." action={<Button onClick={() => router.invalidate()}>Tentar novamente</Button>} />
+    </div>
+  );
+}
 
 function ProductPage() {
   const data = Route.useLoaderData();
