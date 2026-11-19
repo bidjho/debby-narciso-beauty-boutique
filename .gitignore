@@ -1,3 +1,8 @@
+# Copied from .env.example and filled in locally. Never commit this file.
+.env
+.env.*
+!.env.example
+
 # Logs
 logs
 *.log

@@ -8,4 +8,5 @@
 - [x] Testes de regras (preços, stock, WhatsApp) e testes no browser (visitante + admin)
 - [x] Primeiro administrador (bidjhodaaida@gmail.com, dono da loja)
 - [x] Painel Equipa: convidar, mudar acesso, bloquear/reativar, nova palavra-passe
-- [ ] Logótipo em ficheiro original (PNG/SVG) — atualmente recortado da fotografia da loja
+- [x] Documentação de desenvolvimento, configuração local e variáveis de ambiente
+- [ ] Logótipo em ficheiro original PNG/SVG incluído no repositório — a aplicação usa atualmente um asset gerido pelo Lovable
