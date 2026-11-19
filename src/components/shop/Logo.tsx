@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import logo from "@/assets/logo-debby-narciso.webp.asset.json";
+import logo from "@/assets/logo-oficial-debby-narciso.png.asset.json";
 import { cn } from "@/lib/utils";
 
 export function Logo({ className }: { className?: string }) {
@@ -8,9 +8,9 @@ export function Logo({ className }: { className?: string }) {
       <img
         src={logo.url}
         alt="Debby Narciso Cosmetics"
-        width={640}
-        height={350}
-        className="h-11 w-auto rounded-lg object-contain md:h-12"
+        width={1244}
+        height={606}
+        className="h-11 w-auto object-contain md:h-12"
       />
     </Link>
   );

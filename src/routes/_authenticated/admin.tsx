@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ExternalLink, FolderTree, LayoutDashboard, LogOut, Package, ShieldAlert, UserCog, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo-debby-narciso.webp.asset.json";
+import logo from "@/assets/logo-oficial-debby-narciso.png.asset.json";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   beforeLoad: async ({ context }) => {
@@ -71,7 +71,7 @@ function AdminLayout() {
   return (
     <div className="min-h-screen bg-muted/40 pb-20 md:pb-0 md:pl-64">
       <aside className="fixed inset-y-0 left-0 hidden w-64 flex-col bg-sidebar p-5 text-sidebar-foreground md:flex">
-        <img src={logo.url} alt="Debby Narciso Cosmetics" className="h-14 w-auto self-start rounded-lg" />
+        <img src={logo.url} alt="Debby Narciso Cosmetics" className="h-14 w-auto self-start" />
         <p className="eyebrow mt-3 text-gold">Painel</p>
         <nav className="mt-8 flex flex-col gap-1" aria-label="Administração">
           {nav.map((n) => (
@@ -88,7 +88,7 @@ function AdminLayout() {
       </aside>
 
       <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-card px-4 md:hidden">
-        <img src={logo.url} alt="Debby Narciso Cosmetics" className="h-9 w-auto rounded-md" />
+        <img src={logo.url} alt="Debby Narciso Cosmetics" className="h-9 w-auto" />
         <div className="flex items-center gap-1">
           <a href="/" target="_blank" rel="noopener noreferrer" className="flex size-10 items-center justify-center rounded-full hover:bg-accent" aria-label="Ver loja"><ExternalLink className="size-4" /></a>
           <button type="button" onClick={signOut} className="flex size-10 items-center justify-center rounded-full hover:bg-accent" aria-label="Sair"><LogOut className="size-4" /></button>

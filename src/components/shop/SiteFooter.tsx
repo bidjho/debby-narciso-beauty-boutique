@@ -3,14 +3,14 @@ import { Clock, MapPin, Phone } from "lucide-react";
 import { STORE } from "@/lib/store-config";
 import { whatsappChatUrl } from "@/lib/whatsapp";
 import { InstagramIcon, WhatsAppIcon } from "./icons";
-import logo from "@/assets/logo-debby-narciso.webp.asset.json";
+import logo from "@/assets/logo-oficial-debby-narciso.png.asset.json";
 
 export function SiteFooter() {
   return (
     <footer className="mt-20 bg-cocoa text-cocoa-foreground">
       <div className="container-shop grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-1">
-          <img src={logo.url} alt="Debby Narciso Cosmetics" width={640} height={350} loading="lazy" className="h-16 w-auto rounded-lg" />
+          <img src={logo.url} alt="Debby Narciso Cosmetics" width={1244} height={606} loading="lazy" className="h-16 w-auto" />
           <p className="mt-4 text-sm text-cocoa-foreground/70">Cosméticos em Nampula, com entregas para todas as províncias de Moçambique.</p>
         </div>
         <div>

@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import logo from "@/assets/logo-debby-narciso.webp.asset.json";
+import logo from "@/assets/logo-oficial-debby-narciso.png.asset.json";
 
 type AuthSearch = { redirect?: string | undefined };
 
@@ -71,7 +71,7 @@ function AuthPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-blush px-4 py-10">
       <div className="w-full max-w-sm rounded-3xl bg-card p-8 shadow-soft">
-        <img src={logo.url} alt="Debby Narciso Cosmetics" className="mx-auto h-16 w-auto rounded-lg" />
+        <img src={logo.url} alt="Debby Narciso Cosmetics" className="mx-auto h-16 w-auto" />
         <h1 className="mt-6 text-center text-3xl font-semibold">Painel da loja</h1>
         <p className="mt-1 text-center text-sm text-muted-foreground">Acesso reservado à administração.</p>
         <form onSubmit={onSubmit} className="mt-6 space-y-4" noValidate>
