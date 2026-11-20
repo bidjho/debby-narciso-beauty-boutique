@@ -6,6 +6,7 @@ import { getProductBySlug } from "@/lib/catalog.functions";
 import { availabilityLabel, effectivePrice, hasValidPromo, isOutOfStock, maxOrderable } from "@/lib/pricing";
 import { useCart } from "@/lib/cart";
 import { STORE } from "@/lib/store-config";
+import { useSite } from "@/lib/use-site";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/shop/EmptyState";
@@ -77,6 +78,7 @@ function ProductError() {
 
 function ProductPage() {
   const data = Route.useLoaderData();
+  const { contact } = useSite();
   const product = data.product;
   const { add } = useCart();
   const navigate = useNavigate();
@@ -173,7 +175,7 @@ function ProductPage() {
 
           <div className="mt-8 flex gap-3 rounded-2xl bg-secondary p-4 text-sm">
             <Truck className="size-5 shrink-0 text-primary" aria-hidden />
-            <p>{STORE.delivery}. O custo de entrega é confirmado pela loja no WhatsApp.</p>
+            <p>{contact.delivery}. O custo de entrega é confirmado pela loja no WhatsApp.</p>
           </div>
         </div>
       </div>

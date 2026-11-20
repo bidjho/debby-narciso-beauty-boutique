@@ -4,9 +4,11 @@ import { useState, type FormEvent } from "react";
 import { useCart } from "@/lib/cart";
 import { checkoutSchema, normalizeMzPhone, type CheckoutValues } from "@/lib/checkout-schema";
 import { formatMZN } from "@/lib/pricing";
-import { PROVINCES, STORE } from "@/lib/store-config";
+import { PROVINCES } from "@/lib/store-config";
 import { useCartRefresh } from "@/lib/use-cart-refresh";
 import { buildOrderMessage, buildWhatsAppUrl } from "@/lib/whatsapp";
+import { formatStorePhone } from "@/lib/site-content";
+import { useSite } from "@/lib/use-site";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,6 +37,7 @@ const EMPTY: FormState = { fullName: "", phone: "", province: "", city: "", addr
 function CheckoutPage() {
   const { items, ready, subtotal, clear } = useCart();
   const { status } = useCartRefresh();
+  const { contact } = useSite();
   const [values, setValues] = useState<FormState>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<keyof CheckoutValues, string>>>({});
   const [sentUrl, setSentUrl] = useState<string | null>(null);
@@ -64,7 +67,7 @@ function CheckoutPage() {
       { ...d, phone: normalizeMzPhone(d.phone) ?? d.phone, notes: d.notes || undefined },
       items.map((i) => ({ name: i.name, quantity: i.quantity, unitPrice: i.unitPrice })),
     );
-    const url = buildWhatsAppUrl(message);
+    const url = buildWhatsAppUrl(message, contact.whatsappNumber);
     const win = window.open(url, "_blank");
     if (win) win.opener = null;
     setPopupBlocked(!win);
@@ -118,7 +121,7 @@ function CheckoutPage() {
   return (
     <div className="container-shop py-8 md:py-12">
       <h1 className="text-4xl font-semibold md:text-5xl">Finalizar encomenda</h1>
-      <p className="mt-2 text-sm text-muted-foreground">Preencha os dados de entrega. Vamos preparar a mensagem para enviar pelo WhatsApp ({STORE.whatsappDisplay}).</p>
+      <p className="mt-2 text-sm text-muted-foreground">Preencha os dados de entrega. Vamos preparar a mensagem para enviar pelo WhatsApp ({formatStorePhone(contact.whatsappNumber)}).</p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_24rem]">
         <form onSubmit={onSubmit} noValidate className="space-y-5 rounded-3xl bg-card p-6 shadow-soft md:p-8">

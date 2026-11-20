@@ -1,10 +1,12 @@
 import { whatsappChatUrl } from "@/lib/whatsapp";
+import { useSite } from "@/lib/use-site";
 import { WhatsAppIcon } from "./icons";
 
 export function WhatsAppFab() {
+  const { contact } = useSite();
   return (
     <a
-      href={whatsappChatUrl("Olá! Gostaria de saber mais sobre os vossos produtos.")}
+      href={whatsappChatUrl("Olá! Gostaria de saber mais sobre os vossos produtos.", contact.whatsappNumber)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar connosco no WhatsApp"

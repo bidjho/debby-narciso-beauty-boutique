@@ -19,6 +19,8 @@ import { SiteFooter } from "@/components/shop/SiteFooter";
 import { WhatsAppFab } from "@/components/shop/WhatsAppFab";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { getSiteContent } from "@/lib/site.functions";
+import { DEFAULT_SITE_CONTENT } from "@/lib/site-content";
 
 function NotFoundComponent() {
   return (
@@ -100,6 +102,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
   }),
+  // Editable texts/contacts for header, footer and pages; refreshed after edits via router.invalidate().
+  loader: async () => {
+    try {
+      return await getSiteContent();
+    } catch {
+      return DEFAULT_SITE_CONTENT;
+    }
+  },
+  staleTime: 5 * 60_000,
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

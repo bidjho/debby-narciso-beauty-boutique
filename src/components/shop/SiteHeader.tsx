@@ -3,7 +3,8 @@ import { Menu, Search, ShoppingBag, X } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useCart } from "@/lib/cart";
-import { STORE } from "@/lib/store-config";
+import { formatStorePhone } from "@/lib/site-content";
+import { useSite } from "@/lib/use-site";
 import { whatsappChatUrl } from "@/lib/whatsapp";
 import { Logo } from "./Logo";
 import { WhatsAppIcon } from "./icons";
@@ -20,6 +21,7 @@ export function SiteHeader() {
   const [q, setQ] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const { contact } = useSite();
 
   useEffect(() => {
     if (searchOpen) inputRef.current?.focus();
@@ -64,10 +66,10 @@ export function SiteHeader() {
               </Link>
             </nav>
             <div className="mt-8 space-y-2 px-4 text-sm text-muted-foreground">
-              <a href={whatsappChatUrl()} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-foreground">
-                <WhatsAppIcon className="size-4 text-whatsapp" /> {STORE.whatsappDisplay}
+              <a href={whatsappChatUrl(undefined, contact.whatsappNumber)} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-foreground">
+                <WhatsAppIcon className="size-4 text-whatsapp" /> {formatStorePhone(contact.whatsappNumber)}
               </a>
-              <p>{STORE.address}, {STORE.city}</p>
+              <p>{contact.address}, {contact.city}</p>
             </div>
           </SheetContent>
         </Sheet>

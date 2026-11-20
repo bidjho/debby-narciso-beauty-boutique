@@ -9,4 +9,5 @@
 - [x] Primeiro administrador (bidjhodaaida@gmail.com, dono da loja)
 - [x] Painel Equipa: convidar, mudar acesso, bloquear/reativar, nova palavra-passe
 - [x] Documentação de desenvolvimento, configuração local e variáveis de ambiente
-- [ ] Logótipo em ficheiro original PNG/SVG incluído no repositório — a aplicação usa atualmente um asset gerido pelo Lovable
+- [ ] Logótipo original (JPG) e versão transparente (PNG) guardados na pasta `brand/` do repositório
+- [ ] Painel «Site»: dono e administradoras editam textos, fotografias, contactos, horários e WhatsApp do site

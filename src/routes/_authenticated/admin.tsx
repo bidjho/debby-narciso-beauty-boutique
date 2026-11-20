@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { ExternalLink, FolderTree, LayoutDashboard, LogOut, Package, ShieldAlert, UserCog, Users } from "lucide-react";
+import { ExternalLink, FolderTree, Globe, LayoutDashboard, LogOut, Package, ShieldAlert, UserCog, Users } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-oficial-debby-narciso.png.asset.json";
@@ -32,6 +32,7 @@ const NAV = [
   { to: "/admin", label: "Resumo", icon: LayoutDashboard, exact: true },
   { to: "/admin/produtos", label: "Produtos", icon: Package, exact: false },
   { to: "/admin/categorias", label: "Categorias", icon: FolderTree, exact: false },
+  { to: "/admin/site", label: "Site", icon: Globe, exact: false },
   { to: "/admin/equipa", label: "Equipa", icon: Users, exact: false, ownerOnly: true },
   { to: "/admin/conta", label: "Conta", icon: UserCog, exact: false },
 ] as const;
@@ -101,7 +102,7 @@ function AdminLayout() {
 
       <nav className="fixed inset-x-0 bottom-0 z-30 grid border-t border-border bg-card md:hidden" style={{ gridTemplateColumns: `repeat(${nav.length}, minmax(0, 1fr))` }} aria-label="Administração">
         {nav.map((n) => (
-          <Link key={n.to} to={n.to} activeOptions={{ exact: n.exact }} className="flex flex-col items-center gap-1 py-2.5 text-xs text-muted-foreground" activeProps={{ className: "text-primary" }}>
+          <Link key={n.to} to={n.to} activeOptions={{ exact: n.exact }} className="flex min-w-0 flex-col items-center gap-1 py-2.5 text-[0.7rem] text-muted-foreground" activeProps={{ className: "text-primary" }}>
             <n.icon className="size-5" aria-hidden /> {n.label}
           </Link>
         ))}

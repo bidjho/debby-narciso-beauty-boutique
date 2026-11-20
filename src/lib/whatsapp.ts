@@ -52,6 +52,6 @@ export function buildWhatsAppUrl(message: string, number: string = STORE.whatsap
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }
 
-export function whatsappChatUrl(text?: string): string {
-  return text ? buildWhatsAppUrl(text) : `https://wa.me/${STORE.whatsappNumber}`;
+export function whatsappChatUrl(text?: string, number: string = STORE.whatsappNumber): string {
+  return text ? buildWhatsAppUrl(text, number) : `https://wa.me/${number}`;
 }

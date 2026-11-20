@@ -1,7 +1,9 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { ArrowRight, Clock, MapPin, MessageCircle, Phone, Store, Truck } from "lucide-react";
 import { getHomeData } from "@/lib/catalog.functions";
-import { STORE } from "@/lib/store-config";
+import { formatStorePhone, instagramUrl } from "@/lib/site-content";
+import { storageImageUrl } from "@/lib/images";
+import { useSite } from "@/lib/use-site";
 import { whatsappChatUrl } from "@/lib/whatsapp";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/shop/EmptyState";
@@ -41,6 +43,9 @@ function HomeError() {
 
 function HomePage() {
   const data = Route.useLoaderData();
+  const { hero, benefits, editorial, contact } = useSite();
+  const wa = contact.whatsappNumber;
+  const benefitIcons = [Store, MessageCircle, Truck];
 
   return (
     <>
@@ -48,27 +53,32 @@ function HomePage() {
       <section className="relative">
         <div className="container-shop grid items-center gap-8 pb-12 pt-4 md:grid-cols-2 md:gap-12 md:py-16">
           <div className="relative order-1 overflow-hidden rounded-[2rem] md:order-2">
-            <img src={heroImg.url} alt="Coleção de gloss Debby Narciso Cosmetics" width={1120} height={1400} fetchPriority="high" className="aspect-[4/5] w-full object-cover md:aspect-[5/6]" />
-            <div className="absolute bottom-4 left-4 rounded-full bg-card/90 px-4 py-2 text-xs font-medium backdrop-blur">
-              <MapPin className="mr-1 inline size-3.5 text-primary" aria-hidden />
-              Cadri Shopping · Nampula
-            </div>
+            <img src={storageImageUrl(hero.imagePath) ?? heroImg.url} alt="Coleção de gloss Debby Narciso Cosmetics" width={1120} height={1400} fetchPriority="high" className="aspect-[4/5] w-full object-cover md:aspect-[5/6]" />
+            {hero.badge && (
+              <div className="absolute bottom-4 left-4 rounded-full bg-card/90 px-4 py-2 text-xs font-medium backdrop-blur">
+                <MapPin className="mr-1 inline size-3.5 text-primary" aria-hidden />
+                {hero.badge}
+              </div>
+            )}
           </div>
           <div className="order-2 animate-rise md:order-1">
-            <p className="eyebrow text-gold">Debby Narciso Cosmetics</p>
+            <p className="eyebrow text-gold">{hero.eyebrow}</p>
             <h1 className="mt-3 text-5xl font-semibold leading-[0.95] md:text-7xl">
-              A sua beleza,<br />
-              <em className="text-gradient-brand font-medium">com assinatura.</em>
+              {hero.titleLine1}
+              {hero.titleHighlight && (
+                <>
+                  <br />
+                  <em className="text-gradient-brand font-medium">{hero.titleHighlight}</em>
+                </>
+              )}
             </h1>
-            <p className="mt-5 max-w-md text-base text-muted-foreground md:text-lg">
-              Cosméticos escolhidos com carinho em Nampula. Escolha os seus favoritos e encomende diretamente pelo WhatsApp.
-            </p>
+            <p className="mt-5 max-w-md text-base text-muted-foreground md:text-lg">{hero.subtitle}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg">
                 <Link to="/loja">Comprar agora <ArrowRight /></Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <a href={whatsappChatUrl()} target="_blank" rel="noopener noreferrer">
+                <a href={whatsappChatUrl(undefined, wa)} target="_blank" rel="noopener noreferrer">
                   <WhatsAppIcon className="text-whatsapp" /> Falar connosco
                 </a>
               </Button>
@@ -131,7 +141,7 @@ function HomePage() {
               <p className="mt-4 text-cocoa-foreground/75">Enquanto isso, fale connosco pelo WhatsApp ou visite-nos no Cadri Shopping.</p>
               <div className="mt-6">
                 <Button asChild variant="whatsapp" size="lg">
-                  <a href={whatsappChatUrl("Olá! Gostaria de saber que produtos têm disponíveis.")} target="_blank" rel="noopener noreferrer">
+                  <a href={whatsappChatUrl("Olá! Gostaria de saber que produtos têm disponíveis.", wa)} target="_blank" rel="noopener noreferrer">
                     <WhatsAppIcon /> Perguntar no WhatsApp
                   </a>
                 </Button>
@@ -144,12 +154,8 @@ function HomePage() {
       {/* Benefits */}
       <section className="container-shop py-14" aria-label="Vantagens">
         <div className="grid gap-4 md:grid-cols-3">
-          {[
-            { icon: Store, title: "Loja física em Nampula", text: `${STORE.address}. Venha experimentar e conhecer-nos.` },
-            { icon: MessageCircle, title: "Encomendas pelo WhatsApp", text: "Escolha os produtos, envie a encomenda e confirmamos consigo." },
-            { icon: Truck, title: "Entregas em todo o país", text: "Enviamos para todas as províncias de Moçambique." },
-          ].map((b) => (
-            <div key={b.title} className="flex gap-4 rounded-2xl border border-border bg-card p-6">
+          {benefits.map((b, i) => ({ ...b, icon: benefitIcons[i] ?? Store })).map((b, i) => (
+            <div key={i} className="flex gap-4 rounded-2xl border border-border bg-card p-6">
               <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-secondary text-primary">
                 <b.icon className="size-5" aria-hidden />
               </div>
@@ -165,37 +171,37 @@ function HomePage() {
       {/* Brand editorial */}
       <section className="container-shop py-6">
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5">
-          <img src={modelsImg.url} alt="Maquilhagem Debby Narciso em diferentes tons de pele" loading="lazy" className="col-span-1 aspect-[4/5] h-full w-full rounded-2xl object-cover md:row-span-2 md:aspect-auto" />
+          <img src={storageImageUrl(editorial.image1Path) ?? modelsImg.url} alt="Maquilhagem Debby Narciso em diferentes tons de pele" loading="lazy" className="col-span-1 aspect-[4/5] h-full w-full rounded-2xl object-cover md:row-span-2 md:aspect-auto" />
           <div className="col-span-1 flex flex-col justify-center rounded-2xl bg-gradient-brand p-6 text-primary-foreground md:col-span-2 md:p-10">
-            <p className="eyebrow opacity-80">Feito para si</p>
-            <p className="mt-2 font-display text-3xl leading-tight md:text-5xl">Cores que realçam todos os tons de pele.</p>
+            {editorial.eyebrow && <p className="eyebrow opacity-80">{editorial.eyebrow}</p>}
+            <p className="mt-2 font-display text-3xl leading-tight md:text-5xl">{editorial.text}</p>
           </div>
-          <img src={lipstickImg.url} alt="Modelo com batom Debby Narciso" loading="lazy" className="col-span-2 aspect-[3/2] w-full rounded-2xl object-cover md:col-span-2" />
+          <img src={storageImageUrl(editorial.image2Path) ?? lipstickImg.url} alt="Modelo com batom Debby Narciso" loading="lazy" className="col-span-2 aspect-[3/2] w-full rounded-2xl object-cover md:col-span-2" />
         </div>
       </section>
 
       {/* Contact */}
       <section id="contacto" className="container-shop scroll-mt-24 py-14">
         <div className="grid overflow-hidden rounded-[2rem] bg-card shadow-soft md:grid-cols-2">
-          <img src={storeImg.url} alt="Loja Debby Narciso Cosmetics no Cadri Shopping" loading="lazy" className="aspect-[4/5] h-full w-full object-cover md:aspect-auto" />
+          <img src={storageImageUrl(contact.storeImagePath) ?? storeImg.url} alt="Loja Debby Narciso Cosmetics no Cadri Shopping" loading="lazy" className="aspect-[4/5] h-full w-full object-cover md:aspect-auto" />
           <div className="p-7 md:p-12">
             <p className="eyebrow text-gold">Contacto</p>
             <h2 className="mt-2 text-4xl font-semibold">Visite a nossa loja</h2>
             <ul className="mt-6 space-y-4 text-sm">
-              <li className="flex gap-3"><MapPin className="size-5 shrink-0 text-primary" aria-hidden /><span>{STORE.address}<br />{STORE.city}</span></li>
-              <li className="flex gap-3"><Clock className="size-5 shrink-0 text-primary" aria-hidden /><span>{STORE.hours.map((h) => (<span key={h.days} className="block">{h.days}: {h.time}</span>))}</span></li>
-              <li className="flex gap-3"><Phone className="size-5 shrink-0 text-primary" aria-hidden /><span>WhatsApp {STORE.whatsappDisplay}<br />Telefone {STORE.altPhoneDisplay}</span></li>
-              <li className="flex gap-3"><Truck className="size-5 shrink-0 text-primary" aria-hidden /><span>{STORE.delivery}</span></li>
+              <li className="flex gap-3"><MapPin className="size-5 shrink-0 text-primary" aria-hidden /><span>{contact.address}<br />{contact.city}</span></li>
+              <li className="flex gap-3"><Clock className="size-5 shrink-0 text-primary" aria-hidden /><span>{contact.hours.map((h, i) => (<span key={i} className="block">{h.days}: {h.time}</span>))}</span></li>
+              <li className="flex gap-3"><Phone className="size-5 shrink-0 text-primary" aria-hidden /><span>WhatsApp {formatStorePhone(wa)}<br />Telefone {formatStorePhone(contact.altPhone)}</span></li>
+              <li className="flex gap-3"><Truck className="size-5 shrink-0 text-primary" aria-hidden /><span>{contact.delivery}</span></li>
             </ul>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="whatsapp">
-                <a href={whatsappChatUrl()} target="_blank" rel="noopener noreferrer"><WhatsAppIcon /> WhatsApp</a>
+                <a href={whatsappChatUrl(undefined, wa)} target="_blank" rel="noopener noreferrer"><WhatsAppIcon /> WhatsApp</a>
               </Button>
               <Button asChild variant="outline">
-                <a href={`tel:${STORE.altPhone}`}><Phone /> Ligar</a>
+                <a href={`tel:+${contact.altPhone}`}><Phone /> Ligar</a>
               </Button>
               <Button asChild variant="outline">
-                <a href={STORE.instagramUrl} target="_blank" rel="noopener noreferrer"><InstagramIcon /> Instagram</a>
+                <a href={instagramUrl(contact.instagram)} target="_blank" rel="noopener noreferrer"><InstagramIcon /> Instagram</a>
               </Button>
             </div>
           </div>
