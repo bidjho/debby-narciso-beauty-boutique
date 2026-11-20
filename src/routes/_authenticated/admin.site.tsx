@@ -266,7 +266,10 @@ function PhotoField({ label, path, fallback, onChange, onUploaded }: {
   async function onFile(file: File | undefined) {
     if (!file) return;
     const invalid = validateImageFile(file);
-    if (invalid) return toast.error(invalid);
+    if (invalid) {
+      toast.error(invalid);
+      return;
+    }
     setBusy(true);
     try {
       const newPath = await uploadImage(file, "site");
