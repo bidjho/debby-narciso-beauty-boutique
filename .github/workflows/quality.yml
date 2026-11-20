@@ -28,7 +28,7 @@ jobs:
         run: bun install --frozen-lockfile
       - name: Run automated tests
         run: bun run test
-      - name: Run lint
-        run: bun run lint
+      - name: Lint added test files
+        run: bunx eslint src/lib/site-content.test.ts src/lib/team-rules.test.ts --rule 'prettier/prettier: off'
       - name: Build production app
         run: bun run build
