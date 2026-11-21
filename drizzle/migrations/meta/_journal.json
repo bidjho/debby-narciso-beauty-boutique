@@ -43,6 +43,13 @@
       "when": 1795261061237,
       "tag": "0005_restrict_site_content_and_image_reads",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795262589877,
+      "tag": "0006_restrict_has_role_to_caller",
+      "breakpoints": true
     }
   ]
 }
