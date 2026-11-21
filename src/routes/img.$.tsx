@@ -1,29 +1,40 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SAFE_STORAGE_PATH } from "@/lib/images";
 
-// Serves product/category photos from the private storage bucket with long-lived caching.
-// Visitors may read this bucket (storage policy); paths are unique per upload, so caching is safe.
+// Serves product/category/site photos from the private storage bucket with long-lived caching.
+// Visitors have no direct storage access (no listing/reading of the bucket); this route reads
+// on the server, only for validated paths inside the store's photo folders. Paths are random
+// UUIDs per upload, so caching is safe.
+const ALLOWED_FOLDERS = /^(products|categories|site)\//;
+
 export const Route = createFileRoute("/img/$")({
   server: {
     handlers: {
       GET: async ({ params }) => {
-        const path = decodeURIComponent(params._splat ?? "");
-        if (!SAFE_STORAGE_PATH.test(path)) return new Response("Not found", { status: 404 });
-        const base = process.env["SUPABASE_URL"];
-        const key = process.env["SUPABASE_PUBLISHABLE_KEY"];
-        if (!base || !key) return new Response("Unavailable", { status: 503 });
-        const encoded = path.split("/").map(encodeURIComponent).join("/");
-        const res = await fetch(`${base}/storage/v1/object/authenticated/product-images/${encoded}`, {
-          headers: { apikey: key },
-        });
-        if (!res.ok || !res.body) return new Response("Not found", { status: 404 });
-        return new Response(res.body, {
-          status: 200,
-          headers: {
-            "content-type": res.headers.get("content-type") ?? "image/webp",
-            "cache-control": "public, max-age=31536000, immutable",
-          },
-        });
+        let path: string;
+        try {
+          path = decodeURIComponent(params._splat ?? "");
+        } catch {
+          return new Response("Not found", { status: 404 });
+        }
+        if (!SAFE_STORAGE_PATH.test(path) || !ALLOWED_FOLDERS.test(path)) {
+          return new Response("Not found", { status: 404 });
+        }
+        try {
+          const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+          const { data, error } = await supabaseAdmin.storage.from("product-images").download(path);
+          if (error || !data) return new Response("Not found", { status: 404 });
+          return new Response(data, {
+            status: 200,
+            headers: {
+              "content-type": data.type || "image/webp",
+              "cache-control": "public, max-age=31536000, immutable",
+              "x-content-type-options": "nosniff",
+            },
+          });
+        } catch {
+          return new Response("Unavailable", { status: 503 });
+        }
       },
     },
   },
