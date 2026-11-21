@@ -31,9 +31,9 @@ export const Route = createFileRoute("/loja")({
   errorComponent: ShopError,
   head: () => ({
     meta: [
-      { title: "Loja — Debby Narciso Cosmetics" },
+      { title: "Loja — Debby Narciso Cosméticos" },
       { name: "description", content: "Veja todos os cosméticos Debby Narciso disponíveis. Pesquise, filtre por categoria e encomende pelo WhatsApp." },
-      { property: "og:title", content: "Loja — Debby Narciso Cosmetics" },
+      { property: "og:title", content: "Loja — Debby Narciso Cosméticos" },
       { property: "og:description", content: "Catálogo de cosméticos com preços em MZN e encomenda pelo WhatsApp." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

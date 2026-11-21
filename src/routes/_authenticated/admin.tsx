@@ -18,9 +18,9 @@ export const Route = createFileRoute("/_authenticated/admin")({
   },
   head: () => ({
     meta: [
-      { title: "Painel — Debby Narciso Cosmetics" },
+      { title: "Painel — Debby Narciso Cosméticos" },
       { name: "description", content: "Painel de administração da loja." },
-      { property: "og:title", content: "Painel — Debby Narciso Cosmetics" },
+      { property: "og:title", content: "Painel — Debby Narciso Cosméticos" },
       { property: "og:description", content: "Painel de administração da loja." },
       { name: "robots", content: "noindex, nofollow" },
     ],

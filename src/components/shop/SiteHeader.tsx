@@ -8,6 +8,7 @@ import { useSite } from "@/lib/use-site";
 import { whatsappChatUrl } from "@/lib/whatsapp";
 import { Logo } from "./Logo";
 import { WhatsAppIcon } from "./icons";
+import { InstallAppButton } from "./InstallAppButton";
 
 const NAV = [
   { to: "/", label: "Início" },
@@ -70,6 +71,7 @@ export function SiteHeader() {
                 <WhatsAppIcon className="size-4 text-whatsapp" /> {formatStorePhone(contact.whatsappNumber)}
               </a>
               <p>{contact.address}, {contact.city}</p>
+              <InstallAppButton className="mt-4 text-foreground" />
             </div>
           </SheetContent>
         </Sheet>

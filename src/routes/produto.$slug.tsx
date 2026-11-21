@@ -24,7 +24,7 @@ export const Route = createFileRoute("/produto/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Produto indisponível — Debby Narciso Cosmetics" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Produto indisponível — Debby Narciso Cosméticos" }, { name: "robots", content: "noindex" }] };
     }
     const p = loaderData.product;
     const desc = (p.description ?? `${p.name} — Debby Narciso Cosmetics, Nampula.`).slice(0, 155);
@@ -46,7 +46,7 @@ export const Route = createFileRoute("/produto/$slug")({
     };
     return {
       meta: [
-        { title: `${p.name} — Debby Narciso Cosmetics` },
+        { title: `${p.name} — Debby Narciso Cosméticos` },
         { name: "description", content: desc },
         { property: "og:title", content: p.name },
         { property: "og:description", content: desc },

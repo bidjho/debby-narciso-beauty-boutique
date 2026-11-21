@@ -5,6 +5,7 @@ import { whatsappChatUrl } from "@/lib/whatsapp";
 import { formatStorePhone, instagramUrl } from "@/lib/site-content";
 import { useSite } from "@/lib/use-site";
 import { InstagramIcon, WhatsAppIcon } from "./icons";
+import { InstallAppButton } from "./InstallAppButton";
 import logo from "@/assets/logo-oficial-debby-narciso.png.asset.json";
 
 export function SiteFooter() {
@@ -15,6 +16,7 @@ export function SiteFooter() {
         <div className="md:col-span-1">
           <img src={logo.url} alt="Debby Narciso Cosmetics" width={1244} height={606} loading="lazy" className="h-16 w-auto" />
           <p className="mt-4 text-sm text-cocoa-foreground/70">{contact.footerText}</p>
+          <InstallAppButton className="mt-5" />
         </div>
         <div>
           <h3 className="eyebrow mb-4 text-gold">Visite-nos</h3>

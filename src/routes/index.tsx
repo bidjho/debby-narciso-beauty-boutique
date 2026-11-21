@@ -19,9 +19,9 @@ import lipstickImg from "@/assets/modelo-batom.webp.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Debby Narciso Cosmetics — Cosméticos em Nampula, Moçambique" },
+      { title: "Debby Narciso Cosméticos — Loja de beleza em Nampula, Moçambique" },
       { name: "description", content: "Batons, gloss, paletas e muito mais. Loja física no Cadri Shopping, Nampula. Encomende pelo WhatsApp com entregas para todas as províncias." },
-      { property: "og:title", content: "Debby Narciso Cosmetics — Cosméticos em Nampula" },
+      { property: "og:title", content: "Debby Narciso Cosméticos — Loja de beleza em Nampula" },
       { property: "og:description", content: "Encomende os seus cosméticos pelo WhatsApp. Entregas para todas as províncias de Moçambique." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

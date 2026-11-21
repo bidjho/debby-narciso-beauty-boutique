@@ -19,9 +19,9 @@ import { WhatsAppIcon } from "@/components/shop/icons";
 export const Route = createFileRoute("/checkout")({
   head: () => ({
     meta: [
-      { title: "Finalizar encomenda — Debby Narciso Cosmetics" },
+      { title: "Finalizar encomenda — Debby Narciso Cosméticos" },
       { name: "description", content: "Indique os dados de entrega e envie a sua encomenda pelo WhatsApp." },
-      { property: "og:title", content: "Finalizar encomenda — Debby Narciso Cosmetics" },
+      { property: "og:title", content: "Finalizar encomenda — Debby Narciso Cosméticos" },
       { property: "og:description", content: "Envie a sua encomenda pelo WhatsApp." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

@@ -10,9 +10,9 @@ import { QuantityStepper } from "@/components/shop/QuantityStepper";
 export const Route = createFileRoute("/carrinho")({
   head: () => ({
     meta: [
-      { title: "Carrinho — Debby Narciso Cosmetics" },
+      { title: "Carrinho — Debby Narciso Cosméticos" },
       { name: "description", content: "Reveja os produtos no seu carrinho antes de enviar a encomenda pelo WhatsApp." },
-      { property: "og:title", content: "Carrinho — Debby Narciso Cosmetics" },
+      { property: "og:title", content: "Carrinho — Debby Narciso Cosméticos" },
       { property: "og:description", content: "Reveja os produtos escolhidos e finalize pelo WhatsApp." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

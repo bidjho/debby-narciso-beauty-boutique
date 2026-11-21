@@ -24,9 +24,9 @@ export const Route = createFileRoute("/auth")({
     typeof raw["redirect"] === "string" ? { redirect: raw["redirect"] } : {},
   head: () => ({
     meta: [
-      { title: "Entrar — Painel Debby Narciso Cosmetics" },
+      { title: "Entrar — Painel Debby Narciso Cosméticos" },
       { name: "description", content: "Acesso reservado à administração da loja." },
-      { property: "og:title", content: "Entrar — Painel Debby Narciso Cosmetics" },
+      { property: "og:title", content: "Entrar — Painel Debby Narciso Cosméticos" },
       { property: "og:description", content: "Acesso reservado à administração da loja." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
